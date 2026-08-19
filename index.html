@@ -45,6 +45,7 @@
 <style>
   html { scroll-behavior: smooth; }
   body { background: #090c12; }
+  section[id] { scroll-margin-top: 3.5rem; }
   ::selection { background: #5eead4; color: #090c12; }
 
   #stack-canvas-wrap canvas {
@@ -441,7 +442,7 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="reveal px-6 max-w-5xl mx-auto py-24">
+  <section id="contact" class="reveal px-6 max-w-5xl mx-auto min-h-[calc(100vh-3.5rem)] flex flex-col justify-center">
     <p class="eyebrow font-mono text-xs text-violet mb-6">06 / contact</p>
     <h2 class="font-display text-4xl sm:text-5xl text-fog font-semibold max-w-lg leading-tight">
       Building something that needs a polyglot engineer? Let's talk.
