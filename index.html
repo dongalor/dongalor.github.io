@@ -651,8 +651,18 @@
     const fillerPoints = new THREE.Points(fillerGeo, fillerMat);
     rig.add(fillerPoints);
 
-    // anchor nodes: bigger glow dot + label sprite, plus their own point marker
+    // anchor nodes: soft halo + core dot + label sprite, plus their own point marker
     nodes.filter(n => n.anchor).forEach((n) => {
+      const haloMat = new THREE.SpriteMaterial({
+        map: dotTex, color: n.color, transparent: true,
+        opacity: 0.18, depthWrite: false, blending: THREE.AdditiveBlending,
+      });
+      const halo = new THREE.Sprite(haloMat);
+      halo.scale.set(1.1, 1.1, 1);
+      halo.position.copy(n.pos);
+      rig.add(halo);
+      n.haloMesh = halo;
+
       const mat = new THREE.SpriteMaterial({
         map: dotTex, color: n.color, transparent: true,
         depthWrite: false, blending: THREE.AdditiveBlending,
@@ -725,6 +735,9 @@
 
     const bound = RADIUS * 1.15;
     const clock = new THREE.Clock();
+    // eased breathing pulse: 0..1 in, lingers at the extremes instead of snapping through the middle
+    const easeInOutSine = (x) => -(Math.cos(Math.PI * x) - 1) / 2;
+    const pulseAt = (time, phase, speed = 0.55) => easeInOutSine(0.5 + 0.5 * Math.sin(time * speed + phase));
     function animate() {
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
@@ -740,6 +753,14 @@
             );
             n.dotMesh.position.copy(n.pos);
             n.labelMesh.position.copy(n.pos).add(new THREE.Vector3(0, 0.34, 0));
+
+            const pulse = pulseAt(t, n.phase);
+            n.haloMesh.position.copy(n.pos);
+            const haloScale = 0.9 + pulse * 0.9;
+            n.haloMesh.scale.set(haloScale, haloScale, 1);
+            n.haloMesh.material.opacity = 0.12 + pulse * 0.28;
+            const dotScale = 0.38 + pulse * 0.14;
+            n.dotMesh.scale.set(dotScale, dotScale, 1);
           } else {
             n.pos.addScaledVector(n.drift, dt);
             ['x', 'y', 'z'].forEach((ax) => {
