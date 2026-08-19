@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Paul Smith — CV</title>
+<meta name="description" content="Paul Smith. Polyglot full-stack developer and DevOps engineer. 25+ years across infrastructure, web, mobile, desktop and IoT." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#090c12',
+          surface: '#10151f',
+          line: '#212938',
+          fog: '#e7eaf0',
+          muted: '#8894a8',
+          cyan: '#5eead4',
+          violet: '#a78bfa',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'sans-serif'],
+          body: ['Inter', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: #090c12; }
+  ::selection { background: #5eead4; color: #090c12; }
+
+  #stack-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #stack-canvas-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 40%, transparent 25%, #090c12 88%);
+  }
+  #stack-canvas-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.035) 0px,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chip {
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  }
+  .chip:hover {
+    border-color: #5eead4;
+    color: #5eead4;
+    background-color: rgba(94, 234, 212, 0.06);
+  }
+  .chip.v:hover {
+    border-color: #a78bfa;
+    color: #a78bfa;
+    background-color: rgba(167, 139, 250, 0.06);
+  }
+
+  .timeline-dot {
+    box-shadow: 0 0 0 4px #090c12, 0 0 0 5px #212938;
+  }
+
+  .eyebrow {
+    will-change: transform;
+  }
+  #exp-progress {
+    will-change: height;
+    transition: height 0.05s linear;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+
+<body class="bg-ink text-fog font-body antialiased">
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-50 border-b border-line/70 bg-ink/70 backdrop-blur">
+  <nav class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between text-sm">
+    <a href="#hero" class="block hover:opacity-80 transition-opacity" aria-label="Paul Smith — home">
+      <svg viewBox="0 0 64 64" class="h-9 w-9" role="img" aria-hidden="true">
+        <path d="M8 58 Q8 39 20 35 L44 35 Q56 39 56 58 Z" fill="#10151f" stroke="#212938" stroke-width="2"/>
+        <path d="M24 39 L32 46 L40 39" fill="none" stroke="#5eead4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="32" cy="25" r="18" fill="#e7eaf0" stroke="#090c12" stroke-width="2.5"/>
+        <path d="M19 13 Q32 2 45 13" fill="none" stroke="#090c12" stroke-width="2.5" stroke-linecap="round"/>
+        <rect x="15" y="21" width="14" height="10" rx="3" fill="#090c12"/>
+        <rect x="35" y="21" width="14" height="10" rx="3" fill="#090c12"/>
+        <line x1="29" y1="26" x2="35" y2="26" stroke="#090c12" stroke-width="2.5"/>
+        <text x="17.5" y="29.5" font-family="'JetBrains Mono', monospace" font-size="9" fill="#5eead4" font-weight="700">&lt;</text>
+        <text x="38" y="29.5" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a78bfa" font-weight="700">&gt;</text>
+        <path d="M25 36 Q32 40.5 39 36" fill="none" stroke="#090c12" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </a>
+    <div class="hidden sm:flex items-center gap-6 font-mono text-xs text-muted">
+      <a href="#about" class="hover:text-cyan transition-colors">about</a>
+      <a href="#experience" class="hover:text-cyan transition-colors">experience</a>
+      <a href="#projects" class="hover:text-cyan transition-colors">projects</a>
+      <a href="#skills" class="hover:text-cyan transition-colors">skills</a>
+      <a href="#contact" class="hover:text-cyan transition-colors">contact</a>
+    </div>
+    <a href="#contact" class="font-mono text-xs px-3 py-1.5 rounded border border-line hover:border-cyan hover:text-cyan transition-colors">say hi</a>
+  </nav>
+</header>
+
+<div id="stack-canvas-wrap" aria-hidden="true" class="fixed inset-0 z-0 pointer-events-none"></div>
+<div aria-hidden="true" class="fixed inset-0 z-[1] pointer-events-none bg-ink/70"></div>
+
+<main class="relative z-10">
+
+  <!-- HERO -->
+  <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+    <div class="relative z-10 px-6 max-w-5xl mx-auto w-full py-20 md:py-0">
+      <div class="max-w-xl">
+        <p class="font-mono text-xs sm:text-sm text-cyan mb-5 tracking-wide">devops engineer / fullstack team lead / co-founder</p>
+        <h1 class="font-display font-semibold text-5xl sm:text-7xl leading-[0.95] tracking-tight text-fog">
+          Paul<br />Smith
+        </h1>
+        <p class="mt-7 max-w-xl text-base sm:text-lg text-muted leading-relaxed">
+          Polyglot engineer, 25+ years, from ESP32 firmware to distributed cloud services.
+          I build the infrastructure and the product that runs on it, and I keep both
+          running at 3am when something pages.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <a href="#experience" class="font-mono text-xs px-4 py-2.5 rounded bg-fog text-ink font-medium hover:bg-cyan transition-colors">view experience</a>
+          <a href="#contact" class="font-mono text-xs px-4 py-2.5 rounded border border-line hover:border-cyan hover:text-cyan transition-colors">get in touch</a>
+        </div>
+        <div class="mt-16 font-mono text-xs text-muted flex items-center gap-2">
+          <span class="inline-block w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+          scroll
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal px-6 max-w-5xl mx-auto py-24">
+    <p class="eyebrow font-mono text-xs text-violet mb-4">01 / about</p>
+    <div class="grid md:grid-cols-5 gap-10">
+      <p class="md:col-span-3 text-lg sm:text-xl leading-relaxed text-fog/90">
+        I specialize in monorepo architecture, scalable APIs, modern frontend engineering
+        and systems programming, working fluently across TypeScript, Python, Rust, Go,
+        Ruby and Java. Comfortable owning the whole stack: the CI/CD pipeline that ships
+        it, the API that serves it, the app that renders it, and the firmware on the
+        device it talks to.
+      </p>
+      <dl class="md:col-span-2 grid grid-cols-2 gap-x-6 gap-y-8 content-start font-mono">
+        <div>
+          <dt class="text-3xl sm:text-4xl font-display font-semibold text-cyan">25+</dt>
+          <dd class="text-xs text-muted mt-1">years shipping software</dd>
+        </div>
+        <div>
+          <dt class="text-3xl sm:text-4xl font-display font-semibold text-violet">7</dt>
+          <dd class="text-xs text-muted mt-1">languages in production</dd>
+        </div>
+        <div>
+          <dt class="text-3xl sm:text-4xl font-display font-semibold text-cyan">4+</dt>
+          <dd class="text-xs text-muted mt-1">monorepos architected</dd>
+        </div>
+        <div>
+          <dt class="text-3xl sm:text-4xl font-display font-semibold text-violet">2</dt>
+          <dd class="text-xs text-muted mt-1">hats worn at once, usually</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal px-6 max-w-5xl mx-auto py-24">
+    <p class="eyebrow font-mono text-xs text-violet mb-10">02 / experience</p>
+
+    <div class="space-y-16 relative">
+      <div id="exp-progress" aria-hidden="true" class="hidden md:block absolute left-[9rem] top-0 w-px bg-gradient-to-b from-cyan to-violet" style="height: 0px;"></div>
+
+      <!-- Turkov -->
+      <article class="grid md:grid-cols-[7rem_1fr] gap-4 md:gap-8">
+        <div class="font-mono text-xs text-muted pt-1">2022 &mdash; now</div>
+        <div class="border-l border-line pl-6 relative">
+          <span class="timeline-dot absolute -left-[3px] top-2 w-1.5 h-1.5 rounded-full bg-cyan"></span>
+          <h3 class="font-display text-xl text-fog font-medium">DevOps Engineer &middot; Fullstack Team Lead</h3>
+          <p class="text-sm text-muted mt-0.5">Turkov LLC &middot; HVAC manufacturer</p>
+          <p class="mt-4 text-sm sm:text-base text-fog/80 leading-relaxed">
+            Own the DevOps stack end-to-end and lead full-stack development across the
+            company's internal products, at the same time.
+          </p>
+          <ul class="mt-4 space-y-2 text-sm text-fog/70 leading-relaxed list-disc list-inside marker:text-cyan">
+            <li>Self-hosted Gitea CI/CD with custom Actions workflows, zero-downtime deploys across multiple production servers</li>
+            <li>Ansible infrastructure-as-code: provisioning, secrets (Vault), Grafana/Prometheus/InfluxDB monitoring, automated backups</li>
+            <li>Built the internal Service Portal from scratch: Next.js 16, Lucia Auth + Bitrix24 OAuth, PostgreSQL/Prisma, wired into 1C ERP, LOCMAN PLM and IoT firmware management</li>
+            <li>Led the Turkov mobile app (React Native + Expo, 53+ production builds) with EAS Build and OTA updates</li>
+            <li>Runs day-to-day development through agentic coding workflows (Claude Code, custom MCP servers, multi-agent task orchestration) to move faster across the infrastructure and product surfaces owned solo</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Arcane -->
+      <article class="grid md:grid-cols-[7rem_1fr] gap-4 md:gap-8">
+        <div class="font-mono text-xs text-muted pt-1">2020 &mdash; 2022</div>
+        <div class="border-l border-line pl-6 relative">
+          <span class="timeline-dot absolute -left-[3px] top-2 w-1.5 h-1.5 rounded-full bg-violet"></span>
+          <h3 class="font-display text-xl text-fog font-medium">Senior Full-Stack Developer &middot; Blockchain Engineer</h3>
+          <p class="text-sm text-muted mt-0.5">Arcane &middot; Web3 product studio</p>
+          <p class="mt-4 text-sm sm:text-base text-fog/80 leading-relaxed">
+            Delivered across several crypto and decentralised products at once: NFT
+            platforms, payment infrastructure, ATM management, fraud prevention.
+          </p>
+          <ul class="mt-4 space-y-2 text-sm text-fog/70 leading-relaxed list-disc list-inside marker:text-violet">
+            <li>NestJS backend for an NFT platform: Tezos minting, Arweave permanent storage, SSE for live mint status</li>
+            <li>Tezos/LIGO crowdsale smart contracts with a sandbox test suite, plus a Vue.js crowdsale site with wallet integration</li>
+            <li>Extended a Rails crypto payment platform with Solidity/Ethereum contract support</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- MediaStreamer -->
+      <article class="grid md:grid-cols-[7rem_1fr] gap-4 md:gap-8">
+        <div class="font-mono text-xs text-muted pt-1">2014 &mdash; now</div>
+        <div class="border-l border-line pl-6 relative">
+          <span class="timeline-dot absolute -left-[3px] top-2 w-1.5 h-1.5 rounded-full bg-cyan"></span>
+          <h3 class="font-display text-xl text-fog font-medium">Senior Developer &middot; Co-Founder</h3>
+          <p class="text-sm text-muted mt-0.5">MediaStreamer &middot; product &amp; consulting venture</p>
+          <p class="mt-4 text-sm sm:text-base text-fog/80 leading-relaxed">
+            Own the full product lifecycle: research, ideation, architecture and
+            hands-on delivery, across web, mobile and desktop, with AI/LLM and IoT work
+            folded in as products need it.
+          </p>
+        </div>
+      </article>
+
+      <!-- Milyou / chainbit condensed -->
+      <article class="grid md:grid-cols-[7rem_1fr] gap-4 md:gap-8">
+        <div class="font-mono text-xs text-muted pt-1">2011 &mdash; 2014</div>
+        <div class="border-l border-line pl-6 relative">
+          <span class="timeline-dot absolute -left-[3px] top-2 w-1.5 h-1.5 rounded-full bg-violet"></span>
+          <h3 class="font-display text-xl text-fog font-medium">Lead Developer</h3>
+          <p class="text-sm text-muted mt-0.5">chainbit, then Milyou &middot; Moscow</p>
+          <p class="mt-4 text-sm sm:text-base text-fog/80 leading-relaxed">
+            Led a 5-engineer team building a social network for creative professionals
+            in coworking spaces (Milyou), then drove technical decisions at an
+            early-stage blockchain venture (chainbit).
+          </p>
+        </div>
+      </article>
+
+      <!-- Earlier career -->
+      <article class="grid md:grid-cols-[7rem_1fr] gap-4 md:gap-8">
+        <div class="font-mono text-xs text-muted pt-1">2001 &mdash; 2011</div>
+        <div class="border-l border-line pl-6 relative">
+          <span class="timeline-dot absolute -left-[3px] top-2 w-1.5 h-1.5 rounded-full bg-muted"></span>
+          <h3 class="font-display text-xl text-fog font-medium">Earlier career</h3>
+          <p class="text-sm text-muted mt-0.5">nine roles, one straight line into full-stack</p>
+          <ul class="mt-4 space-y-2 text-sm text-fog/70 leading-relaxed">
+            <li><span class="text-fog/90">Private Customer</span> &middot; loan management app, Java/Rails <span class="font-mono text-xs text-muted">2011</span></li>
+            <li><span class="text-fog/90">The PBN Company</span> &middot; IT specialist, systems &amp; security <span class="font-mono text-xs text-muted">2007</span></li>
+            <li><span class="text-fog/90">Begun</span> &middot; partner support into developer role <span class="font-mono text-xs text-muted">2005&ndash;07</span></li>
+            <li><span class="text-fog/90">ADV</span> &middot; XML/XSLT designer <span class="font-mono text-xs text-muted">2005</span></li>
+            <li><span class="text-fog/90">E-House Holding</span> &middot; front office developer <span class="font-mono text-xs text-muted">2004&ndash;05</span></li>
+            <li><span class="text-fog/90">LLC "Telecontact"</span> &middot; interfaces for Russian Post, ORT, NTV, MTV Russia and national ad campaigns <span class="font-mono text-xs text-muted">2002&ndash;04</span></li>
+            <li><span class="text-fog/90">Interscholastic Learning Center No.13</span> &middot; IT teacher <span class="font-mono text-xs text-muted">2003&ndash;04</span></li>
+            <li><span class="text-fog/90">Complete TDK</span> &middot; system administrator <span class="font-mono text-xs text-muted">2002&ndash;03</span></li>
+            <li><span class="text-fog/90">Eventa-Tour Agency</span> &middot; cashier &amp; IT specialist <span class="font-mono text-xs text-muted">2001&ndash;02</span></li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal px-6 max-w-5xl mx-auto py-24">
+    <p class="eyebrow font-mono text-xs text-violet mb-10">03 / personal projects</p>
+    <div class="grid md:grid-cols-3 gap-6">
+
+      <article class="p-6 rounded-lg border border-line hover:border-cyan/60 transition-colors flex flex-col">
+        <h3 class="font-display text-lg text-fog font-medium">Goblin</h3>
+        <p class="text-sm text-fog/70 leading-relaxed mt-3">
+          A Linux mod manager ecosystem: a client (TUI, GUI, CLI) for installing and
+          tracking mods from local files, NexusMods and a community repository, paired
+          with Goblin's Den, a companion mod portal with auth, uploads and moderation.
+          Built as a free, open-source alternative on Linux.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-line/70">
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Python</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Textual</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">PySide6</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">FastAPI</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Next.js</span>
+        </div>
+      </article>
+
+      <article class="p-6 rounded-lg border border-line hover:border-violet/60 transition-colors flex flex-col">
+        <h3 class="font-display text-lg text-fog font-medium">xacpx</h3>
+        <p class="text-sm text-fog/70 leading-relaxed mt-3">
+          A Go wrapper around the Agent Client Protocol CLI that turns raw agent
+          JSON-RPC streams into a readable terminal UI: live tool activity, plans,
+          token usage and cost, persistent sessions and detached background jobs, plus
+          a Telegram bot to run and watch the same jobs remotely.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-line/70">
+          <span class="chip v font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Go</span>
+          <span class="chip v font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Bubble Tea</span>
+          <span class="chip v font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">ACP</span>
+          <span class="chip v font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Telegram Bot API</span>
+        </div>
+      </article>
+
+      <article class="p-6 rounded-lg border border-line hover:border-cyan/60 transition-colors flex flex-col">
+        <h3 class="font-display text-lg text-fog font-medium">DnD Lite</h3>
+        <p class="text-sm text-fog/70 leading-relaxed mt-3">
+          A browser-based multiplayer D&amp;D-lite game. A GM authors adventures, maps,
+          NPCs and quests; players join by invite code and explore a shared map in real
+          time, with turn order, combat, fog of war, inventory and a live event log.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-line/70">
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Next.js</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Pixi.js</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">Go</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">PostgreSQL</span>
+          <span class="chip font-mono text-[11px] px-2 py-1 rounded border border-line text-fog/60 cursor-default">WebSocket</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal px-6 max-w-5xl mx-auto py-24">
+    <p class="eyebrow font-mono text-xs text-violet mb-10">04 / skills</p>
+
+    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
+
+      <div>
+        <h3 class="font-display text-sm text-cyan mb-3">Frontend</h3>
+        <div class="flex flex-wrap gap-2" id="skills-frontend"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-violet mb-3">Backend</h3>
+        <div class="flex flex-wrap gap-2" id="skills-backend"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-cyan mb-3">Data &amp; Storage</h3>
+        <div class="flex flex-wrap gap-2" id="skills-data"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-violet mb-3">Mobile &amp; Desktop</h3>
+        <div class="flex flex-wrap gap-2" id="skills-clients"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-cyan mb-3">DevOps &amp; Linux Systems</h3>
+        <div class="flex flex-wrap gap-2" id="skills-devops"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-violet mb-3">Architecture &amp; Integrations</h3>
+        <div class="flex flex-wrap gap-2" id="skills-arch"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-cyan mb-3">Security</h3>
+        <div class="flex flex-wrap gap-2" id="skills-security"></div>
+      </div>
+
+      <div>
+        <h3 class="font-display text-sm text-violet mb-3">AI &amp; Agentic Engineering</h3>
+        <div class="flex flex-wrap gap-2" id="skills-ai"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPETENCIES -->
+  <section id="competencies" class="reveal px-6 max-w-5xl mx-auto py-24">
+    <p class="eyebrow font-mono text-xs text-violet mb-10">05 / what I bring</p>
+    <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-4">
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Full-stack applications designed and built from the ground up</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Polyglot development: TypeScript, Python, Rust, Go, Ruby, Java</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Desktop apps with Electron and Tauri</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Legacy system migration to modern stacks</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>CI/CD, Docker and Ansible-driven infrastructure automation</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Headless CMS architecture: Strapi, Keystone, Payload</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>AI/LLM integrations and agentic development workflows: Claude Code, MCP, multi-agent orchestration</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Linux server administration and homelab/bare-metal provisioning</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Performance work across database, frontend and API layers</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Code review, mentorship and technical documentation</li>
+      <li class="flex gap-3 text-sm sm:text-base text-fog/80"><span class="text-cyan mt-0.5">&#10003;</span>Comfortable in Agile/Scrum teams</li>
+    </ul>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="reveal px-6 max-w-5xl mx-auto py-24">
+    <p class="eyebrow font-mono text-xs text-violet mb-6">06 / contact</p>
+    <h2 class="font-display text-4xl sm:text-5xl text-fog font-semibold max-w-lg leading-tight">
+      Building something that needs a polyglot engineer? Let's talk.
+    </h2>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href="mailto:zul@youtute.me" class="font-mono text-sm px-4 py-2.5 rounded bg-fog text-ink font-medium hover:bg-cyan transition-colors">zul@youtute.me</a>
+      <a href="https://www.linkedin.com/in/paulsmith1981" target="_blank" rel="noopener" class="font-mono text-sm px-4 py-2.5 rounded border border-line hover:border-cyan hover:text-cyan transition-colors">linkedin</a>
+    </div>
+  </section>
+
+  <footer class="px-6 max-w-5xl mx-auto py-10 border-t border-line/70 flex items-center justify-between font-mono text-xs text-muted">
+    <span>Paul Smith</span>
+    <span id="year"></span>
+  </footer>
+
+</main>
+
+<script type="module">
+  import * as THREE from 'three';
+  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // --- Scroll reveal ---
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  revealEls.forEach((el) => io.observe(el));
+
+  // --- Scroll parallax: eyebrow labels drift gently, experience timeline gets a real progress fill ---
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion) {
+    const eyebrows = document.querySelectorAll('.eyebrow');
+    const expSection = document.getElementById('experience');
+    const expContainer = expSection ? expSection.querySelector('.space-y-16') : null;
+    const progressLine = document.getElementById('exp-progress');
+
+    let ticking = false;
+    function updateParallax() {
+      const vh = window.innerHeight;
+
+      eyebrows.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const dist = rect.top + rect.height / 2 - vh / 2;
+        const shift = Math.max(-16, Math.min(16, dist * 0.06));
+        el.style.transform = `translateY(${shift}px)`;
+      });
+
+      if (expContainer && progressLine) {
+        const rect = expSection.getBoundingClientRect();
+        const start = vh;
+        const end = -rect.height;
+        let progress = (start - rect.top) / (start - end);
+        progress = Math.max(0, Math.min(1, progress));
+        progressLine.style.height = `${progress * expContainer.getBoundingClientRect().height}px`;
+      }
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateParallax();
+  }
+
+  // --- Skill chips (data-driven, no external assets) ---
+  const skillGroups = {
+    'skills-frontend': ['React 19', 'Next.js 16', 'Vue.js', 'React Native + Expo', 'TypeScript', 'Tailwind CSS', 'Zustand', 'Framer Motion', 'Three.js'],
+    'skills-backend': ['NestJS', 'Hono.js', 'FastAPI', 'ASP.NET Core', 'Ruby on Rails', 'Axum (Rust)', 'GraphQL', 'tRPC', 'Socket.io'],
+    'skills-data': ['PostgreSQL', 'MS SQL Server', 'MongoDB', 'Redis', 'SQLite', 'Prisma', 'TypeORM', 'Diesel'],
+    'skills-clients': ['React Native', 'Expo EAS', 'Flutter', 'Electron', 'Tauri'],
+    'skills-devops': ['Docker', 'Ansible', 'Gitea/GitHub Actions', 'Grafana', 'Prometheus', 'InfluxDB', 'Sentry', 'Linux server admin', 'systemd', 'Incus/LXC', 'WireGuard/AmneziaWG', 'Self-hosted infra'],
+    'skills-arch': ['Turborepo', 'pnpm Workspaces', 'REST', 'WebSocket', 'OAuth 2.0', '1C ERP', 'Telegram Bot API'],
+    'skills-security': ['Lucia Auth', 'NextAuth.js', 'Argon2', 'JWT', 'TOTP 2FA'],
+    'skills-ai': ['Claude Code', 'MCP servers', 'Multi-agent orchestration', 'tmux agent fleets', 'OpenAI API', 'Ollama', 'Open WebUI'],
+  };
+  const colorClass = { cyan: 'text-cyan/90 border-line', violet: 'text-violet/90 border-line' };
+  let gi = 0;
+  for (const [id, items] of Object.entries(skillGroups)) {
+    const host = document.getElementById(id);
+    const variant = gi % 2 === 0 ? '' : 'v';
+    gi++;
+    items.forEach((label) => {
+      const span = document.createElement('span');
+      span.textContent = label;
+      span.className = `chip ${variant} font-mono text-xs px-2.5 py-1.5 rounded border border-line text-fog/70 cursor-default`;
+      host.appendChild(span);
+    });
+  }
+
+  // --- Three.js signature: a live infra graph, nodes drifting and linking, everything drawn procedurally ---
+  const wrap = document.getElementById('stack-canvas-wrap');
+  if (wrap) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    wrap.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x090c12);
+    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+    camera.position.set(0, 0.6, 11);
+    camera.lookAt(0, 0, 0);
+
+    const rig = new THREE.Group();
+    scene.add(rig);
+
+    // The stack he actually owns end to end — now as anchor nodes in a live graph,
+    // orbited by anonymous service/process nodes that wire themselves up on the fly,
+    // spread wide enough to read as a full-page mesh rather than a hero-box graphic.
+    const LAYERS = [
+      { label: 'FIRMWARE', color: 0x5eead4 },
+      { label: 'INFRA',    color: 0xa78bfa },
+      { label: 'BACKEND',  color: 0x5eead4 },
+      { label: 'FRONTEND', color: 0xa78bfa },
+      { label: 'PRODUCT',  color: 0x5eead4 },
+    ];
+    const CYAN = 0x5eead4, VIOLET = 0xa78bfa;
+    const FILLER_COUNT = 110;
+    const LINK_DIST = 3.1;
+    const RADIUS = 8.5;
+
+    function softDotTexture() {
+      const res = 64;
+      const c = document.createElement('canvas');
+      c.width = c.height = res;
+      const ctx = c.getContext('2d');
+      const g = ctx.createRadialGradient(res / 2, res / 2, 0, res / 2, res / 2, res / 2);
+      g.addColorStop(0, 'rgba(255,255,255,1)');
+      g.addColorStop(0.4, 'rgba(255,255,255,0.7)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, res, res);
+      return new THREE.CanvasTexture(c);
+    }
+    const dotTex = softDotTexture();
+
+    function labelSprite(label, colorHex) {
+      const w = 320, h = 96;
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      const ctx = c.getContext('2d');
+      const color = '#' + colorHex.toString(16).padStart(6, '0');
+      ctx.font = '600 34px "JetBrains Mono", monospace';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.95;
+      ctx.fillText(label, 4, h / 2);
+      const tex = new THREE.CanvasTexture(c);
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false });
+      const sprite = new THREE.Sprite(mat);
+      sprite.scale.set(1.7, 1.7 * (h / w), 1);
+      return sprite;
+    }
+
+    // build node set: anchors on a loose ring, fillers scattered through the volume
+    const nodes = [];
+    LAYERS.forEach((layer, i) => {
+      const a = (i / LAYERS.length) * Math.PI * 2;
+      const pos = new THREE.Vector3(
+        Math.cos(a) * RADIUS * 0.85,
+        Math.sin(i * 1.7) * 1.1,
+        Math.sin(a) * RADIUS * 0.85
+      );
+      nodes.push({
+        pos, base: pos.clone(), color: layer.color, anchor: true,
+        phase: i * 1.9, drift: new THREE.Vector3(),
+      });
+    });
+    for (let i = 0; i < FILLER_COUNT; i++) {
+      const pos = new THREE.Vector3(
+        (Math.random() * 2 - 1) * RADIUS,
+        (Math.random() * 2 - 1) * RADIUS * 0.55,
+        (Math.random() * 2 - 1) * RADIUS
+      );
+      nodes.push({
+        pos, base: pos.clone(), color: Math.random() > 0.5 ? CYAN : VIOLET, anchor: false,
+        phase: Math.random() * Math.PI * 2,
+        drift: new THREE.Vector3((Math.random() - 0.5) * 0.4, (Math.random() - 0.5) * 0.4, (Math.random() - 0.5) * 0.4),
+      });
+    }
+
+    // filler points: one Points cloud, per-vertex colour
+    const fillerGeo = new THREE.BufferGeometry();
+    const fillerPos = new Float32Array(FILLER_COUNT * 3);
+    const fillerCol = new Float32Array(FILLER_COUNT * 3);
+    const tmpColor = new THREE.Color();
+    nodes.filter(n => !n.anchor).forEach((n, i) => {
+      tmpColor.setHex(n.color);
+      fillerCol[i * 3] = tmpColor.r; fillerCol[i * 3 + 1] = tmpColor.g; fillerCol[i * 3 + 2] = tmpColor.b;
+    });
+    fillerGeo.setAttribute('position', new THREE.BufferAttribute(fillerPos, 3));
+    fillerGeo.setAttribute('color', new THREE.BufferAttribute(fillerCol, 3));
+    const fillerMat = new THREE.PointsMaterial({
+      size: 0.16, map: dotTex, transparent: true, vertexColors: true,
+      depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true,
+    });
+    const fillerPoints = new THREE.Points(fillerGeo, fillerMat);
+    rig.add(fillerPoints);
+
+    // anchor nodes: bigger glow dot + label sprite, plus their own point marker
+    nodes.filter(n => n.anchor).forEach((n) => {
+      const mat = new THREE.SpriteMaterial({
+        map: dotTex, color: n.color, transparent: true,
+        depthWrite: false, blending: THREE.AdditiveBlending,
+      });
+      const dot = new THREE.Sprite(mat);
+      dot.scale.set(0.42, 0.42, 1);
+      dot.position.copy(n.pos);
+      rig.add(dot);
+      n.dotMesh = dot;
+    });
+    LAYERS.forEach((layer, i) => {
+      const n = nodes[i];
+      const label = labelSprite(layer.label, layer.color);
+      label.position.copy(n.pos).add(new THREE.Vector3(0, 0.34, 0));
+      rig.add(label);
+      n.labelMesh = label;
+    });
+
+    // link lines: worst-case buffer sized for every possible pair, draw range trimmed per-frame
+    const MAX_PAIRS = (nodes.length * (nodes.length - 1)) / 2;
+    const linkGeo = new THREE.BufferGeometry();
+    const linkPos = new Float32Array(MAX_PAIRS * 2 * 3);
+    const linkCol = new Float32Array(MAX_PAIRS * 2 * 3);
+    linkGeo.setAttribute('position', new THREE.BufferAttribute(linkPos, 3));
+    linkGeo.setAttribute('color', new THREE.BufferAttribute(linkCol, 3));
+    const linkMat = new THREE.LineBasicMaterial({
+      vertexColors: true, transparent: true, opacity: 0.4,
+      blending: THREE.AdditiveBlending, depthWrite: false,
+    });
+    const links = new THREE.LineSegments(linkGeo, linkMat);
+    rig.add(links);
+
+    const grid = new THREE.GridHelper(RADIUS * 3, 24, 0x5eead4, 0x212938);
+    grid.position.y = -RADIUS * 0.65;
+    grid.material.transparent = true;
+    grid.material.opacity = 0.1;
+    rig.add(grid);
+
+    rig.rotation.x = -0.18;
+    rig.rotation.y = 0.55;
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.4, 0.5, 0.12);
+    composer.addPass(bloom);
+
+    let hoverX = 0, hoverY = 0;
+    window.addEventListener('pointermove', (e) => {
+      hoverX = e.clientX / window.innerWidth - 0.5;
+      hoverY = e.clientY / window.innerHeight - 0.5;
+    });
+
+    function resize() {
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h);
+      composer.setSize(w, h);
+      const aspect = w / h;
+      camera.aspect = aspect;
+
+      // narrow/portrait frames need the camera pulled back further to keep the mesh full-bleed
+      const dist = aspect < 1 ? 11 / Math.max(aspect, 0.45) : 11;
+      camera.position.set(0, 0.6, dist);
+      camera.lookAt(0, 0, 0);
+
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(wrap);
+    resize();
+
+    const bound = RADIUS * 1.15;
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      const dt = Math.min(clock.getDelta(), 0.05);
+
+      if (!reduceMotion) {
+        nodes.forEach((n) => {
+          if (n.anchor) {
+            n.pos.set(
+              n.base.x + Math.sin(t * 0.25 + n.phase) * 0.18,
+              n.base.y + Math.sin(t * 0.4 + n.phase) * 0.14,
+              n.base.z + Math.cos(t * 0.25 + n.phase) * 0.18
+            );
+            n.dotMesh.position.copy(n.pos);
+            n.labelMesh.position.copy(n.pos).add(new THREE.Vector3(0, 0.34, 0));
+          } else {
+            n.pos.addScaledVector(n.drift, dt);
+            ['x', 'y', 'z'].forEach((ax) => {
+              if (Math.abs(n.pos[ax]) > bound) n.drift[ax] *= -1;
+            });
+          }
+        });
+
+        const fillers = nodes.filter(n => !n.anchor);
+        fillers.forEach((n, i) => {
+          fillerPos[i * 3] = n.pos.x; fillerPos[i * 3 + 1] = n.pos.y; fillerPos[i * 3 + 2] = n.pos.z;
+        });
+        fillerGeo.attributes.position.needsUpdate = true;
+
+        // rebuild link lines from current proximity
+        let cursor = 0;
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const d = nodes[i].pos.distanceTo(nodes[j].pos);
+            if (d < LINK_DIST) {
+              const alpha = 1 - d / LINK_DIST;
+              tmpColor.setHex(nodes[i].color).multiplyScalar(alpha);
+              linkPos[cursor * 6] = nodes[i].pos.x; linkPos[cursor * 6 + 1] = nodes[i].pos.y; linkPos[cursor * 6 + 2] = nodes[i].pos.z;
+              linkCol[cursor * 6] = tmpColor.r; linkCol[cursor * 6 + 1] = tmpColor.g; linkCol[cursor * 6 + 2] = tmpColor.b;
+              tmpColor.setHex(nodes[j].color).multiplyScalar(alpha);
+              linkPos[cursor * 6 + 3] = nodes[j].pos.x; linkPos[cursor * 6 + 4] = nodes[j].pos.y; linkPos[cursor * 6 + 5] = nodes[j].pos.z;
+              linkCol[cursor * 6 + 3] = tmpColor.r; linkCol[cursor * 6 + 4] = tmpColor.g; linkCol[cursor * 6 + 5] = tmpColor.b;
+              cursor++;
+            }
+          }
+        }
+        linkGeo.setDrawRange(0, cursor * 2);
+        linkGeo.attributes.position.needsUpdate = true;
+        linkGeo.attributes.color.needsUpdate = true;
+
+        rig.rotation.y = 0.55 + Math.sin(t * 0.1) * 0.2 + hoverX * 0.5;
+        rig.rotation.x = -0.18 + hoverY * 0.25;
+      }
+      composer.render();
+    }
+    animate();
+  }
+</script>
+
+</body>
+</html>
